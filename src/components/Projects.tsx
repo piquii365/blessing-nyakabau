@@ -4,65 +4,58 @@ import { ExternalLink, Github, Calendar, Tag } from "lucide-react";
 const Projects: React.FC = () => {
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "Full-stack e-commerce solution built with React, Node.js, and MySQL. Features include user authentication, product management, shopping cart, and payment integration.",
-      technologies: ["React", "Node.js", "MySQL", "Stripe API", "JWT"],
-      image: "https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800",
-      githubUrl: "https://github.com/piquii365/ecommerce-platform",
-      liveUrl: "https://ecommerce-demo.example.com",
-      date: "2024",
-      featured: true
+      title: "Aurora Energy Admin, Dealer Panels, and Backend",
+      description:
+        "I developed the frontend for Aurora Energy’s admin and dealer dashboards using React, creating intuitive interfaces for managing users, products, orders, and dealer transactions. The panels feature role-based access control, real-time data visualization, and seamless integration with the Node.js backend for efficient solar product distribution.",
+      technologies: ["React", "Node.js", "MySQL", "JWT"],
+      image:
+        "https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800",
+      githubUrl: "https://github.com/piquii365/aurora_client.git",
+      liveUrl: "https://auroraenergy.co.zw",
+      date: "2025",
+      featured: true,
     },
     {
-      title: "Task Management System",
-      description: "Collaborative task management application with real-time updates, built using .NET MVC and SQL Server. Includes team collaboration features and progress tracking.",
-      technologies: [".NET MVC", "SQL Server", "SignalR", "Bootstrap"],
-      image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
-      githubUrl: "https://github.com/piquii365/task-management",
-      liveUrl: "https://taskmanager-demo.example.com",
-      date: "2023",
-      featured: true
+      title: "Terramera Africa",
+      description:
+        "Designed and built Terramera Africa's complete web platform using React (Frontend), Node.js, Express (Backend), and MySQL (Database). The project features a dynamic admin dashboard, product management system, and user-friendly interfaces for seamless agricultural solutions browsing and transactions.",
+      technologies: ["React", "Express", "Node", "MySql"],
+      image:
+        "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
+      githubUrl: "https://github.com/piquii365/terramera",
+      liveUrl: "https://terramera.africa",
+      date: "2025",
+      featured: false,
     },
     {
-      title: "Weather Analytics Dashboard",
-      description: "Python-based weather data analytics platform with interactive visualizations. Processes real-time weather data and provides insights through charts and graphs.",
+      title: "Elisha Tshuma Portfolio Website",
+      description:
+        "I designed and developed tshuma.guru, a professional portfolio website built with modern web technologies to showcase my work and skills.",
       technologies: ["Python", "Django", "PostgreSQL", "Chart.js", "REST API"],
-      image: "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800",
-      githubUrl: "https://github.com/piquii365/weather-analytics",
-      liveUrl: "https://weather-analytics.example.com",
-      date: "2023",
-      featured: false
+      image:
+        "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800",
+      githubUrl: "https://github.com/piquii365/portfolio",
+      liveUrl: "https://tshuma.guru",
+      date: "2025",
+      featured: false,
     },
     {
-      title: "Inventory Management System",
-      description: "Java-based inventory management system for small businesses. Features include stock tracking, supplier management, and automated reorder alerts.",
-      technologies: ["Java", "Spring Boot", "MySQL", "Thymeleaf", "JPA"],
-      image: "https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=800",
-      githubUrl: "https://github.com/piquii365/inventory-system",
-      liveUrl: null,
-      date: "2023",
-      featured: false
-    },
-    {
-      title: "Real-time Chat Application",
-      description: "Modern chat application with real-time messaging, file sharing, and group chat functionality. Built with React and Socket.io for seamless communication.",
-      technologies: ["React", "Socket.io", "Node.js", "MongoDB", "Redis"],
-      image: "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=800",
-      githubUrl: "https://github.com/piquii365/chat-app",
-      liveUrl: "https://chat-demo.example.com",
+      title: "AI-Powered Employee Onboarding System",
+      description:
+        "developed an AI-driven onboarding platform using TensorFlow.js, React, and Express to automate and personalize the new hire experience. The system uses machine learning to analyze employee interactions and adapt training materials in real-time for better engagement.",
+      technologies: [
+        "React",
+        "Express",
+        "Node.js",
+        "TensorFlow.js",
+        "Brain.js",
+      ],
+      image:
+        "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800",
+      githubUrl: "https://github.com/piquii365/project-power",
       date: "2024",
-      featured: true
+      featured: false,
     },
-    {
-      title: "Financial Dashboard",
-      description: "Comprehensive financial tracking dashboard with expense categorization, budget planning, and financial goal tracking. Responsive design for all devices.",
-      technologies: ["React", "TanStack Query", "Node.js", "PostgreSQL", "Chart.js"],
-      image: "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800",
-      githubUrl: "https://github.com/piquii365/financial-dashboard",
-      liveUrl: "https://finance-tracker.example.com",
-      date: "2024",
-      featured: false
-    }
   ];
 
   const featuredProjects = projects.filter(project => project.featured);
