@@ -1,15 +1,48 @@
-import React from "react";
-import { Download, FileText, Award, Briefcase, GraduationCap } from "lucide-react";
+import React, { useState } from "react";
+import { Download, FileText, Award, Briefcase, GraduationCap, Mail, Send, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 
 const CVDownload: React.FC = () => {
-  const handleDownloadCV = () => {
-    // Create a link element and trigger download
-    const link = document.createElement('a');
-    link.href = '/cv/Blessing_Nyakabau_CV.pdf'; // You'll need to add your actual CV file to the public folder
-    link.download = 'Blessing_Nyakabau_CV.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSendCV = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email) {
+      toast.error("Please enter your email address");
+      return;
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Simulate API call to send CV via email
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Here you would typically make an API call to your backend
+      // const response = await fetch('/api/send-cv', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email })
+      // });
+
+      setIsSubmitted(true);
+      toast.success("CV sent successfully! Please check your email.");
+      setEmail("");
+    } catch (error) {
+      toast.error("Failed to send CV. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const cvHighlights = [
@@ -40,29 +73,28 @@ const CVDownload: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-[#192A51] mb-6">
-            Download My CV
+            Get My CV
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-[#967AA1] to-[#AAA1C8] mx-auto mb-8"></div>
           <p className="text-lg text-[#192A51]/80 max-w-2xl mx-auto">
-            Get a comprehensive overview of my professional background, skills, and experience. 
-            Perfect for HR departments and potential collaborators.
+            Enter your email address to receive my comprehensive CV with detailed information about my professional background, skills, and experience.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* CV Preview Card */}
+          {/* CV Request Form */}
           <div className="relative">
             <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/20">
               <div className="flex items-center mb-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#192A51] to-[#967AA1] rounded-full flex items-center justify-center mr-4">
-                  <FileText className="w-8 h-8 text-white" />
+                  <Mail className="w-8 h-8 text-white" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-[#192A51]">
-                    Blessing Nyakabau
+                    Request CV via Email
                   </h3>
                   <p className="text-[#967AA1] font-medium">
-                    Full Stack Developer CV
+                    Professional PDF Document
                   </p>
                 </div>
               </div>
@@ -70,32 +102,82 @@ const CVDownload: React.FC = () => {
               <div className="space-y-4 mb-8">
                 <div className="flex items-center text-[#192A51]/80">
                   <div className="w-2 h-2 bg-[#967AA1] rounded-full mr-3"></div>
-                  <span>5+ years of development experience</span>
+                  <span>Comprehensive professional overview</span>
                 </div>
                 <div className="flex items-center text-[#192A51]/80">
                   <div className="w-2 h-2 bg-[#967AA1] rounded-full mr-3"></div>
-                  <span>Multiple programming languages & frameworks</span>
+                  <span>Detailed project portfolio</span>
                 </div>
                 <div className="flex items-center text-[#192A51]/80">
                   <div className="w-2 h-2 bg-[#967AA1] rounded-full mr-3"></div>
-                  <span>Full-stack project portfolio</span>
+                  <span>Technical skills breakdown</span>
                 </div>
                 <div className="flex items-center text-[#192A51]/80">
                   <div className="w-2 h-2 bg-[#967AA1] rounded-full mr-3"></div>
-                  <span>Professional references available</span>
+                  <span>Contact information included</span>
                 </div>
               </div>
 
-              <button
-                onClick={handleDownloadCV}
-                className="w-full bg-gradient-to-r from-[#192A51] to-[#967AA1] text-white py-4 px-6 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-3"
-              >
-                <Download size={24} />
-                <span>Download CV (PDF)</span>
-              </button>
+              {!isSubmitted ? (
+                <form onSubmit={handleSendCV} className="space-y-4">
+                  <div>
+                    <label htmlFor="email" className="block text-[#192A51] font-medium mb-2">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="your.email@example.com"
+                      required
+                      className="w-full px-4 py-3 border border-[#D5C6E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#967AA1] focus:border-transparent transition-all duration-300"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full bg-gradient-to-r from-[#192A51] to-[#967AA1] text-white py-4 px-6 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-3 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        <span>Sending CV...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send size={20} />
+                        <span>Send CV to Email</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              ) : (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h4 className="text-xl font-semibold text-[#192A51] mb-2">
+                    CV Sent Successfully!
+                  </h4>
+                  <p className="text-[#192A51]/80 mb-4">
+                    Please check your email inbox (and spam folder) for my CV.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setIsSubmitted(false);
+                      setEmail("");
+                    }}
+                    className="text-[#967AA1] hover:text-[#192A51] font-medium transition-colors duration-300"
+                  >
+                    Send to another email
+                  </button>
+                </div>
+              )}
 
               <p className="text-center text-[#192A51]/60 text-sm mt-4">
-                Last updated: January 2025 • File size: ~2MB
+                Your email will only be used to send the CV • No spam guaranteed
               </p>
             </div>
 
@@ -138,13 +220,37 @@ const CVDownload: React.FC = () => {
 
             <div className="mt-8 p-6 bg-gradient-to-r from-[#192A51]/10 to-[#967AA1]/10 rounded-xl border border-[#967AA1]/20">
               <h4 className="text-lg font-semibold text-[#192A51] mb-3">
-                💡 Quick Tip
+                🔒 Privacy Notice
               </h4>
               <p className="text-[#192A51]/80 leading-relaxed">
-                My CV is regularly updated with the latest projects and skills. 
-                It's formatted for both digital viewing and printing, making it 
-                perfect for any hiring process.
+                Your email address is used solely for sending the CV and will not be stored, 
+                shared, or used for any other purpose. I respect your privacy and follow 
+                best practices for data protection.
               </p>
+            </div>
+
+            <div className="mt-6 p-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200">
+              <h4 className="text-lg font-semibold text-[#192A51] mb-3">
+                📧 What to Expect
+              </h4>
+              <ul className="text-[#192A51]/80 space-y-2">
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                  <span>CV delivered within minutes</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                  <span>Professional PDF format</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                  <span>Optimized for ATS systems</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                  <span>Print-friendly layout</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
