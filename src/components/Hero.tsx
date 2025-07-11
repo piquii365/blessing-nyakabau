@@ -3,7 +3,7 @@ import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 
 const Hero: React.FC = () => {
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F5E6E8] via-[#D5C6E0] to-[#AAA1C8">
+    <section className="min-h-screen px-4 sm:px-6 lg:px-8 py-16 lg:py-24 flex items-center justify-center bg-gradient-to-br from-[#F5E6E8] via-[#D5C6E0] to-[#AAA1C8">
       <div className="max-w-7xl mx-auto section-padding">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}

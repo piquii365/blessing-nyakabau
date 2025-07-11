@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#F5E6E8]">
+    <div className="min-h-screen bg-[#F5E6E8] w-screen overflow-x-hidden box-border">
       <Toaster
         position="top-right"
         toastOptions={{
