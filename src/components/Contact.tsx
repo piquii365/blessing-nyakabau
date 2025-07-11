@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
+import { toast, Toaster } from "sonner";
 import {
   Mail,
   Phone,
@@ -17,7 +19,7 @@ const Contact: React.FC = () => {
     subject: "",
     message: "",
   });
-
+  const formRef = useRef<HTMLFormElement | null>(null);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -29,10 +31,24 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    // Reset form
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    if (formRef.current) {
+      emailjs
+        .sendForm("service_abm4kuj", "template_cmdw5d7", formRef.current, {
+          publicKey: "nPjdPQJ6UM-vfXOpy",
+        })
+        .then(
+          () => {
+            toast.success("Message sent successfully!");
+          },
+          (error) => {
+            console.error("EmailJS error:", error);
+            toast.error("Failed to send message.");
+          }
+        );
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } else {
+      toast.error("Form reference is not available.");
+    }
   };
 
   const contactInfo = [
@@ -131,7 +147,7 @@ const Contact: React.FC = () => {
                   <Github size={20} />
                 </a>
                 <a
-                  href="https://linked.in/blessing_nyakabau"
+                  href="https://www.linkedin.com/in/blessing-nyakabau"
                   className="w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg flex items-center justify-center text-white transition-all duration-300 transform hover:scale-110"
                 >
                   <Linkedin size={20} />
@@ -148,7 +164,7 @@ const Contact: React.FC = () => {
 
           {/* Contact Form */}
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label
@@ -257,6 +273,7 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </div>
+      <Toaster position="top-right" richColors />
     </section>
   );
 };

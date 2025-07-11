@@ -1,44 +1,51 @@
-import React, { useState } from "react";
-import { Download, FileText, Award, Briefcase, GraduationCap, Mail, Send, CheckCircle } from "lucide-react";
+import React, { useState, useRef } from "react";
+import {
+  FileText,
+  Award,
+  Briefcase,
+  GraduationCap,
+  Mail,
+  Send,
+  CheckCircle,
+} from "lucide-react";
 import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 
 const CVDownload: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const formRef = useRef<HTMLFormElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSendCV = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!email) {
-      toast.error("Please enter your email address");
-      return;
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast.error("Please enter a valid email address");
-      return;
+    if (formRef.current) {
+      emailjs
+        .sendForm("service_abm4kuj", "template_uqw3he3", formRef.current, {
+          publicKey: "nPjdPQJ6UM-vfXOpy",
+        })
+        .then(
+          () => {
+            toast.success("Message sent successfully!");
+          },
+          (error) => {
+            console.error("EmailJS error:", error);
+            toast.error("Failed to send message.");
+          }
+        );
+      formRef.current.reset();
+    } else {
+      toast.error("Form reference is not available.");
     }
 
     setIsLoading(true);
 
     try {
-      // Simulate API call to send CV via email
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Here you would typically make an API call to your backend
-      // const response = await fetch('/api/send-cv', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email })
-      // });
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       setIsSubmitted(true);
       toast.success("CV sent successfully! Please check your email.");
-      setEmail("");
     } catch (error) {
+      console.error("Error sending CV:", error);
       toast.error("Failed to send CV. Please try again.");
     } finally {
       setIsLoading(false);
@@ -49,23 +56,23 @@ const CVDownload: React.FC = () => {
     {
       icon: <Briefcase className="w-6 h-6" />,
       title: "Professional Experience",
-      description: "Detailed work history and project contributions"
+      description: "Detailed work history and project contributions",
     },
     {
       icon: <GraduationCap className="w-6 h-6" />,
       title: "Education & Certifications",
-      description: "Academic background and professional certifications"
+      description: "Academic background and professional certifications",
     },
     {
       icon: <Award className="w-6 h-6" />,
       title: "Technical Skills",
-      description: "Comprehensive list of programming languages and tools"
+      description: "Comprehensive list of programming languages and tools",
     },
     {
       icon: <FileText className="w-6 h-6" />,
       title: "Project Portfolio",
-      description: "Key projects with technologies and achievements"
-    }
+      description: "Key projects with technologies and achievements",
+    },
   ];
 
   return (
@@ -77,7 +84,9 @@ const CVDownload: React.FC = () => {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-[#967AA1] to-[#AAA1C8] mx-auto mb-8"></div>
           <p className="text-lg text-[#192A51]/80 max-w-2xl mx-auto">
-            Enter your email address to receive my comprehensive CV with detailed information about my professional background, skills, and experience.
+            Enter your email address to receive my comprehensive CV with
+            detailed information about my professional background, skills, and
+            experience.
           </p>
         </div>
 
@@ -119,16 +128,22 @@ const CVDownload: React.FC = () => {
               </div>
 
               {!isSubmitted ? (
-                <form onSubmit={handleSendCV} className="space-y-4">
+                <form
+                  onSubmit={handleSendCV}
+                  ref={formRef}
+                  className="space-y-4"
+                >
                   <div>
-                    <label htmlFor="email" className="block text-[#192A51] font-medium mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-[#192A51] font-medium mb-2"
+                    >
                       Email Address *
                     </label>
                     <input
                       type="email"
                       id="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      name="email"
                       placeholder="your.email@example.com"
                       required
                       className="w-full px-4 py-3 border border-[#D5C6E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#967AA1] focus:border-transparent transition-all duration-300"
@@ -167,7 +182,6 @@ const CVDownload: React.FC = () => {
                   <button
                     onClick={() => {
                       setIsSubmitted(false);
-                      setEmail("");
                     }}
                     className="text-[#967AA1] hover:text-[#192A51] font-medium transition-colors duration-300"
                   >
@@ -185,7 +199,7 @@ const CVDownload: React.FC = () => {
             <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-[#967AA1] to-[#AAA1C8] rounded-full flex items-center justify-center shadow-lg animate-float">
               <Award className="w-8 h-8 text-white" />
             </div>
-            <div 
+            <div
               className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-[#AAA1C8] to-[#D5C6E0] rounded-full flex items-center justify-center shadow-lg animate-float"
               style={{ animationDelay: "1s" }}
             >
@@ -198,7 +212,7 @@ const CVDownload: React.FC = () => {
             <h3 className="text-2xl font-semibold text-[#192A51] mb-8">
               What's Included in My CV
             </h3>
-            
+
             {cvHighlights.map((highlight, index) => (
               <div
                 key={index}
@@ -223,9 +237,9 @@ const CVDownload: React.FC = () => {
                 🔒 Privacy Notice
               </h4>
               <p className="text-[#192A51]/80 leading-relaxed">
-                Your email address is used solely for sending the CV and will not be stored, 
-                shared, or used for any other purpose. I respect your privacy and follow 
-                best practices for data protection.
+                Your email address is used solely for sending the CV and will
+                not be stored, shared, or used for any other purpose. I respect
+                your privacy and follow best practices for data protection.
               </p>
             </div>
 
