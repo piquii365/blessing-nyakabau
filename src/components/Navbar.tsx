@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import logo from "/logo.png";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +32,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center">
             <div className="h-10">
-              <img src="/logo.png" alt="Logo" className="h-full" />
+              <img src={logo} alt="Logo" className="h-full" />
             </div>
             <span className="ml-3 text-xl font-bold text-[#192A51]">
               Blessing Nyakabau

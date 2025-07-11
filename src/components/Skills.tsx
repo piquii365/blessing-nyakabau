@@ -1,6 +1,6 @@
 import React from "react";
 
-const Skills = () => {
+const Skills: React.FC = () => {
   const skillCategories = [
     {
       title: "Frontend Technologies",

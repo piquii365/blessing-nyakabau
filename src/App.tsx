@@ -1,4 +1,3 @@
-import React from "react";
 import { Toaster } from "sonner";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -12,14 +11,14 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <div className="min-h-screen bg-[#F5E6E8]">
-      <Toaster 
-        position="top-right" 
+      <Toaster
+        position="top-right"
         toastOptions={{
           style: {
-            background: '#192A51',
-            color: '#F5E6E8',
-            border: '1px solid #967AA1'
-          }
+            background: "#192A51",
+            color: "#F5E6E8",
+            border: "1px solid #967AA1",
+          },
         }}
       />
       <Navbar />
